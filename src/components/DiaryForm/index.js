@@ -22,7 +22,8 @@ export default function DiaryForm() {
 
     function handleSaveDiary(text){
         const diary = {
-            author: "enrik sabalvaro",
+            userId: localStorage.getItem('id').toString(),
+            author: localStorage.getItem('name').toString(),
             text: text,
             sentiment: "happy"
         }

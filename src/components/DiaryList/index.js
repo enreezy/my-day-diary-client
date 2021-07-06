@@ -12,7 +12,7 @@ export default function DiaryList() {
     const { getDiaries, deleteDiary } = bindActionCreators(actionCreators, dispatch);
 
     useEffect(() => {
-        getDiaries()
+        getDiaries(localStorage.getItem('id'))
     }, [])
 
     const columns = [
@@ -24,8 +24,13 @@ export default function DiaryList() {
         },
         {
             title: 'Date',
-            dataIndex: 'age',
-            key: 'age',
+            dataIndex: 'date',
+            key: 'date',
+        },
+        {
+            title: 'Text',
+            dataIndex: 'text',
+            key: 'text',
         },
         {
             title: 'AI Sentiment',
@@ -67,7 +72,7 @@ export default function DiaryList() {
             id: diary._id,
             key: i,
             name: diary.author,
-            age: new Date(diary.date).toISOString().slice(0, 10).toString(),
+            date: new Date(diary.date).toISOString().slice(0, 10).toString(),
             tags: [diary.sentiment],
             text: diary.text
         })

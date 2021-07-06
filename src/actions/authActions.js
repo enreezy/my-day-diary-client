@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN, CHECK_AUTH } from './types';
+import { LOGIN, CHECK_AUTH, REGISTER } from './types';
 
 export const login = credentials => dispatch => {
     axios
@@ -22,4 +22,15 @@ export const isAuthenticated = token => dispatch => {
             payload: res.data
         })
     );
+}
+
+export const register = credentials => dispatch => {
+    axios
+        .post('http://localhost:8085/api/auth/register', credentials)
+        .then(res =>
+            dispatch({
+                type: REGISTER,
+                payload: res.data
+            })
+        )
 }

@@ -7,32 +7,30 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "actions/authActions"
 import { useHistory, Redirect, Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignIn(){
   const state = useSelector(state => state.auth);
   const dispatch = useDispatch()
-  const { login } = bindActionCreators(actionCreators, dispatch);
+  const { register } = bindActionCreators(actionCreators, dispatch);
+  const history = useHistory();
 
   useEffect(() => {
     if(state.user.token) {
         localStorage.setItem("token", state.user.token);
-        localStorage.setItem("id", state.user.result.id);
-        localStorage.setItem("name", state.user.result.name);
     }
   },[state])
 
   const onFinish = values => {
     const credentials = {
         username: values.username,
+        name: values.name,
         password: values.password
     }
 
-    login(credentials);
+    register(credentials);
+    history.push("/");
   };
-
-  if(state.user.auth){
-    return <Redirect to="/" />
-  }
 
   return (
     <>
@@ -57,6 +55,17 @@ export default function SignIn(){
         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
       </Form.Item>
       <Form.Item
+        name="name"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your Name!',
+          },
+        ]}
+      >
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Name" />
+      </Form.Item>
+      <Form.Item
         name="password"
         rules={[
           {
@@ -71,21 +80,13 @@ export default function SignIn(){
           placeholder="Password"
         />
       </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
-      </Form.Item>
+   
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
+          register
         </Button>
-        Or <Link to="/signup">register now!</Link>
+        <Link to="/signin">Go Back</Link>
       </Form.Item>
     </Form>
     </>

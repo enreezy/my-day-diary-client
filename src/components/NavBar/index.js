@@ -17,11 +17,13 @@ class NavBar extends React.Component {
     render() {
         const { current } = this.state;
         return (
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+            <>
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                 <Menu.Item key="1"><a href="/diaries">Home</a></Menu.Item>
-                <Menu.Item key="2">About Me</Menu.Item>
-                <Menu.Item key="3">Graph</Menu.Item>
+                {/* <Menu.Item key="2">About Me</Menu.Item>
+                <Menu.Item key="3">Graph</Menu.Item> */}
             </Menu>
+            </>
         );
     }
 }
