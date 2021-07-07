@@ -7,12 +7,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "actions/authActions"
 import { useHistory, Redirect, Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignIn(){
   const state = useSelector(state => state.auth);
   const dispatch = useDispatch()
   const { register } = bindActionCreators(actionCreators, dispatch);
   const history = useHistory();
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if(state.user.token) {
@@ -28,13 +30,15 @@ export default function SignIn(){
     }
 
     register(credentials);
-    history.push("/");
+    form.resetFields();
+    toast.success("💙 User Created!");
   };
 
   return (
     <>
     <WordCloud />
     <Form
+      form={form}
       name="normal_login"
       className="login-form"
       initialValues={{
@@ -88,6 +92,7 @@ export default function SignIn(){
         <Link to="/signin">Go Back</Link>
       </Form.Item>
     </Form>
+    <ToastContainer />
     </>
   );
 };

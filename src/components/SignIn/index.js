@@ -21,6 +21,11 @@ export default function SignIn(){
         localStorage.setItem("id", state.user.result.id);
         localStorage.setItem("name", state.user.result.name);
     }
+
+    if(state.user.invalid) {
+      toast.error("👀 Incorrect username or password!")
+    }
+
   },[state])
 
   const onFinish = values => {
