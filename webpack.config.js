@@ -40,6 +40,11 @@ module.exports = {
         test: /\.(png|woff|woff2|eot|ttf|svg|jpg)$/,
         use: ["url-loader?limit=100000"],
       },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+        options: {},
+      }
     ],
   },
   devtool: "cheap-module-eval-source-map",
