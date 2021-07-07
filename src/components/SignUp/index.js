@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "actions/authActions"
 import { useHistory, Redirect, Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignIn(){
   const state = useSelector(state => state.auth);

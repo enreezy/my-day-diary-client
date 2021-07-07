@@ -3,7 +3,7 @@ import { LOGIN, CHECK_AUTH, REGISTER } from './types';
 
 export const login = credentials => dispatch => {
     axios
-        .post('http://localhost:8085/api/auth/login', credentials)
+        .post(`${process.env.SERVER_API}/api/auth/login`, credentials)
         .then(res =>
             dispatch({
                 type: LOGIN,
@@ -13,7 +13,7 @@ export const login = credentials => dispatch => {
 }
 
 export const isAuthenticated = token => dispatch => {
-    axios.get('http://localhost:8085/api/auth/isUserAuth',{
+    axios.get(`${process.env.SERVER_API}/api/auth/isUserAuth`,{
         headers: {
             "x-access-token": token
         }
@@ -26,7 +26,7 @@ export const isAuthenticated = token => dispatch => {
 
 export const register = credentials => dispatch => {
     axios
-        .post('http://localhost:8085/api/auth/register', credentials)
+        .post(`${process.env.SERVER_API}/api/auth/register`, credentials)
         .then(res =>
             dispatch({
                 type: REGISTER,

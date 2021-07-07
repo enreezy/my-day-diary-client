@@ -6,7 +6,8 @@ import * as actionCreators from "actions/"
 import { SaveOutlined } from '@ant-design/icons'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation } from 'react-router-dom';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
+
 export default function DiaryForm() {
     const state = useSelector(state => state.diary);
     const dispatch = useDispatch()
@@ -14,6 +15,7 @@ export default function DiaryForm() {
     const location = useLocation();
     const [currentText, setCurrentText] = useState(location.state ? location.state.data.text : '');
     const [viewFlag, setViewFlag] = useState(location.state ? true : false);
+    const history = useHistory();
 
 
     function handleChange(event) {
@@ -29,7 +31,10 @@ export default function DiaryForm() {
         }
 
         addDiary(diary);
-        toast.success("✔️ Diary saved!")
+        history.push({
+            pathname: "/diaries",
+            state: { created: true }
+        });
     }
 
     function handleUpdateDiary(data) {

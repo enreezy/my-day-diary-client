@@ -24,9 +24,20 @@
   margin: 150px auto;
   max-width: 300px;
 }
+
 .login-form-forgot {
   float: right;
 }
+
 .login-form-button {
   width: 100%;
+}
+
+.loading {
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
 }

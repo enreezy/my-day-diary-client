@@ -6,12 +6,14 @@ import WordCloud from '../WordCloud';
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "actions/authActions"
-import { useHistory, Redirect, Link } from 'react-router-dom';
+import { useHistory, useLocation, Redirect, Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignIn(){
   const state = useSelector(state => state.auth);
   const dispatch = useDispatch()
   const { login } = bindActionCreators(actionCreators, dispatch);
+  const location = useLocation();
 
   useEffect(() => {
     if(state.user.token) {
@@ -88,6 +90,7 @@ export default function SignIn(){
         Or <Link to="/signup">register now!</Link>
       </Form.Item>
     </Form>
+    <ToastContainer />
     </>
   );
 };

@@ -3,7 +3,7 @@ import { GET_DIARIES, ADD_DIARY, UPDATE_DIARY, DELETE_DIARY, DIARIES_LOADING } f
 
 export const getDiaries = (id) => dispatch => {
     dispatch(setDiariesLoading());
-    axios.get(`http://localhost:8085/api/diaries/${id}`)
+    axios.get(`${process.env.SERVER_API}/api/diaries/${id}`)
         .then(res => dispatch({
             type: GET_DIARIES,
             payload: res.data
@@ -13,7 +13,7 @@ export const getDiaries = (id) => dispatch => {
 
 export const addDiary = diary => dispatch => {
     axios
-        .post('http://localhost:8085/api/diaries/', diary)
+        .post(`${process.env.SERVER_API}/api/diaries/`, diary)
         .then(res =>
             dispatch({
                 type: ADD_DIARY,
@@ -24,7 +24,7 @@ export const addDiary = diary => dispatch => {
 
 export const updateDiary = (id, diary) => dispatch => {
     axios
-        .put(`http://localhost:8085/api/diaries/${id}`, diary)
+        .put(`${process.env.SERVER_API}/api/diaries/${id}`, diary)
         .then(res => dispatch({
             type: UPDATE_DIARY,
             payload: res.data
@@ -33,7 +33,7 @@ export const updateDiary = (id, diary) => dispatch => {
 }
 
 export const deleteDiary = id => dispatch => {
-    axios.delete(`http://localhost:8085/api/diaries/${id}`).then(res =>
+    axios.delete(`${process.env.SERVER_API}/api/diaries/${id}`).then(res =>
         dispatch({
             type: DELETE_DIARY,
             payload: id

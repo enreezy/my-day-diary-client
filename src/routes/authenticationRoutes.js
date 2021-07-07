@@ -7,12 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actionCreators from "actions/authActions"
 import ProtectedRoutes from "./protectedRoutes";
+import { Spin, Alert } from 'antd';
 
 export default function AuthenticationRoutes(){ 
     const state = useSelector(state => state.auth);
     const dispatch = useDispatch()
     const { isAuthenticated } = bindActionCreators(actionCreators, dispatch);
-    const [authentecited, setAuthenticated] = useState(false);
     
     useEffect(() => {
         if(localStorage.getItem('token')) {
@@ -20,14 +20,24 @@ export default function AuthenticationRoutes(){
         }
     }, []);
 
+    if(state.user.auth === undefined && localStorage.getItem('token')) {
+        return (
+            <div className="loading">
+                <Spin />
+            </div>
+        );
+    }else{
+        return (
+            <Switch>
+                <Route exact path="/signin" component={SignIn} />
+                <Route exact path="/signup" component={SignUp} />
+                <ProtectedRoutes path="/" component={App} isAuth={state.user.auth} />
+            </Switch>
+        );
+    }
+
     
-    return(
-        <Switch>
-            <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
-            <ProtectedRoutes path="/" component={App} isAuth={state.user.auth} />
-        </Switch>
-    );
+    
 
 
 
