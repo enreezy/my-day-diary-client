@@ -4,7 +4,7 @@
   "description": "Annotation App",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --mode=development",
+    "start": "webpack-dev-server --mode=development --hot --inline --content-base=public --history-api-fallback",
     "build": "webpack --mode=production",
     "dev": "webpack-dev-server --mode=development --hot --inline --content-base=public --history-api-fallback"
   },
