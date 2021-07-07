@@ -4,12 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as actionCreators from 'actions';
 import { bindActionCreators } from 'redux';
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function DiaryList() {
     const state = useSelector(state => state.diary);
     const dispatch = useDispatch();
 
     const { getDiaries, deleteDiary } = bindActionCreators(actionCreators, dispatch);
+
+    function handleDelete(id) {
+        deleteDiary(id);
+        toast.error("❌ Deleted!")
+    }
 
     useEffect(() => {
         getDiaries(localStorage.getItem('id'))
@@ -60,7 +66,7 @@ export default function DiaryList() {
             render: (text, record) => (
                 <Space size="middle">
                     <Link to={{ pathname: "/view", state: {data: record} }}><Button type="primary">View</Button></Link>
-                    <Button onClick={() => deleteDiary(record.id)} type="danger">Delete</Button>
+                    <Button onClick={() => handleDelete(record.id)} type="danger">Delete</Button>
                 </Space>
             )
         },
@@ -79,6 +85,9 @@ export default function DiaryList() {
     })
 
     return (
-        <Table columns={columns} dataSource={data} total={data.length} />
+        <>
+            <Table columns={columns} dataSource={data} total={data.length} />
+            <ToastContainer />
+        </>
     )
 }
