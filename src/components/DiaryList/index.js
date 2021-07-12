@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Button } from 'antd';
+import { Table, Tag, Space, Button, Popconfirm, Switch, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actionCreators from 'actions';
 import { bindActionCreators } from 'redux';
@@ -13,17 +13,29 @@ export default function DiaryList() {
     const location = useLocation();
 
     const { getDiaries, deleteDiary } = bindActionCreators(actionCreators, dispatch);
+    const [visible, setVisible] = useState([])
 
     function handleDelete(id) {
         deleteDiary(id);
         toast.error("❌ Deleted!")
     }
 
+    function cancel() {
+        setVisible(false);
+    }
+
+    function confirm(id) {
+        setVisible(false)
+        handleDelete(id)
+    }
+
     useEffect(() => {
         getDiaries(localStorage.getItem('id'))
-        if(location.state) {
+        if (location.state) {
             toast.success("✔️ Diary saved!")
         }
+
+
     }, [])
 
     const columns = [
@@ -70,9 +82,21 @@ export default function DiaryList() {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <Link to={{ pathname: "/view", state: {data: record} }}><Button type="primary" icon={<EyeOutlined />}>View</Button></Link>
-                    <Button onClick={() => handleDelete(record.id)} type="danger" icon={<DeleteOutlined />}>Delete</Button>
-                </Space>
+                    <Link to={{ pathname: "/view", state: { data: record } }}><Button type="primary" icon={<EyeOutlined />}>View</Button></Link>
+                    <Popconfirm
+                        title="Are you sure delete this diary?"
+                        visible={visible[record.id]}
+                        onConfirm={() => confirm(record.id)}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button type="danger" icon={<DeleteOutlined />}>Delete</Button>
+                    </Popconfirm>
+
+
+
+                </Space >
             )
         },
     ];
